@@ -39,5 +39,4 @@ export const seatInfos = [
   { "id": 38, "isEmpty": false, "gender": "female" },
   { "id": 39, "isEmpty": true, "gender": "" },
   { "id": 40, "isEmpty": true, "gender": "" },
-  { "id": 41, "isEmpty": false, "gender": "male" }
 ]
