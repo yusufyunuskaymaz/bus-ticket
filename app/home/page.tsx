@@ -5,6 +5,23 @@ import styles from "./style.module.css";
 import { AutoComplete } from "@/components/AutoComplete";
 import DatePicker from "@/components/DatePicker";
 import seat from "@/assets/images/seat.png"
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+export type ISeferler = {
+  kalkisOtogari: string;
+  varisOtogari: string;
+  kalkisSehri: string;
+  varisSehri: string;
+  tarih: string;
+  kalkisSaat: string;
+  varisSaat: string;
+  sure: string;
+  bosKoltukSayisi: string;
+  fiyat: string;
+  firma: string;
+  firmaResmi: string;
+}
 
 export type IValues = {
   fromWhere: string;
@@ -13,6 +30,7 @@ export type IValues = {
 };
 
 export const Home = () => {
+  const router = useRouter()
   const date = new Date().toISOString().slice(0, 10);
   const initialState = {
     fromWhere: "",
@@ -20,7 +38,7 @@ export const Home = () => {
     date: date,
   };
   const [data, setData] = useState(initialState);
-  const [seferler, setSeferler] = useState([]);
+  const [seferler, setSeferler] = useState<ISeferler[]>([]);
 
   const handleSubmit = async () => {
     // if(data.date || data.fromWhere || data.toWhere){
@@ -89,7 +107,8 @@ export const Home = () => {
         <h3 className="font-bold text-3xl text-center py-5">Uygun Seferler</h3>
         {seferler && seferler?.map((item,index) => {
           return (
-            <div key={index+1} className="border flex-between p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
+            <Link key={index+1}  href={{pathname:"/home/sefer", query:{...item}}}>
+            <div className="border flex-between p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
               <img
                 width={100}
                 height={50}
@@ -109,6 +128,7 @@ export const Home = () => {
               <p className="text-xl font-bold">{item.fiyat} ₺</p>
               <button className="w-auto">Bileti Al {'->'}</button>
             </div>
+            </Link>
           );
         })}
       </div>
