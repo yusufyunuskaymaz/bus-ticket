@@ -18,7 +18,7 @@ export const toastWarnNotify = (msg: string) => {
 export const toastSuccessNotify = (msg: string) => {
   toast.success(msg, {
     position: "top-right",
-    autoClose: 3000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -38,5 +38,5 @@ export const toastErrorNotify = (msg: string) => {
     draggable: true,
     progress: undefined,
     theme: "light",
-  });
+  },);
 };

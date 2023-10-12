@@ -1,65 +1,116 @@
-import React from 'react'
-import { ILoginFormProps } from './LoginForm'
+"use client";
+import React, { useState } from "react";
+import { ILoginFormProps } from "./LoginForm";
+import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
+import { ToastContainer } from "react-toastify";
 
+export type INewUser = {
+  name: string;
+  surname: string;
+  mail: string;
+  gender: string;
+  birthDate: string;
+  password: string;
+  password2: string;
+};
 export const SignUpForm = (props: ILoginFormProps) => {
-  const { setLogin } = props
+  const { setLogin } = props;
+
+
+  const user = {
+    name: "",
+    surname: "",
+    mail: "",
+    gender: "",
+    birthDate: "",
+    password: "",
+    password2: "",
+  };
+
+  let allUsers: INewUser[]
+
+  const [newUser, setNewUser] = useState<INewUser>(user);
+  console.log(newUser);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (newUser.password !== newUser.password2) {
+      toastErrorNotify("Şifreler uyuşmuyor lütfen kontrol edin...");
+    } else {
+      
+      if(localStorage.getItem("users")){
+        allUsers = JSON.parse(localStorage.getItem("users") || "");
+        // check if user exists 
+        if(allUsers.some(user=>user.mail == newUser.mail)){
+          toastErrorNotify("Bu e postayla kayıtlı kullanıcı var!")
+          return
+        }
+        
+      }else{
+        allUsers = []
+      }
+      localStorage.setItem("users", JSON.stringify([...allUsers, newUser]));
+      toastSuccessNotify("Tebrikler! Kullanıcı kaydı oluşturuldu");
+      setTimeout(() => {
+        setLogin(true);
+      }, 3000);
+    }
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 pt-4 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        {/* <img
-          className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-          width={45}
-          height={45}
-        /> */}
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Create Accound  🚀
+        <h2 className=" text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          Aramıza Katıl 🚀
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-3" action="#" method="POST">
-          <div className='flex gap-3'>
-          <div className=''>
-            <label
-              htmlFor="text"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              İsim
-            </label>
-            <div className="mt-2">
-              <input
-                id="name"
-                name="name"
-                type="text"
-                autoComplete="name"
-                placeholder="Name..."
-                required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-3">
+          <div className="flex gap-3">
+            <div className="">
+              <label
+                htmlFor="text"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                İsim
+              </label>
+              <div className="mt-2">
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  placeholder="Name..."
+                  required
+                  className="input py-2"
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, name: e.target.value })
+                  }
+                />
+              </div>
             </div>
-          </div>
-          <div className=''>
-            <label
-              htmlFor="text"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Soyisim
-            </label>
-            <div className="mt-2">
-              <input
-                id="surname"
-                name="surname"
-                type="text"
-                autoComplete="surname"
-                placeholder="Surname..."
-                required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+            <div className="">
+              <label
+                htmlFor="text"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Soyisim
+              </label>
+              <div className="mt-2">
+                <input
+                  id="surname"
+                  name="surname"
+                  type="text"
+                  autoComplete="surname"
+                  placeholder="Surname..."
+                  required
+                  className="input py-2"
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, surname: e.target.value })
+                  }
+                />
+              </div>
             </div>
-          </div>
           </div>
           <div>
             <label
@@ -76,45 +127,56 @@ export const SignUpForm = (props: ILoginFormProps) => {
                 autoComplete="email"
                 placeholder="Mail..."
                 required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="input py-2"
+                onChange={(e) =>
+                  setNewUser({ ...newUser, mail: e.target.value })
+                }
               />
             </div>
           </div>
-          <div>
-            <label
-              htmlFor="text"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Cinsiyet
-            </label>
-            <div className="mt-2">
-              <input
-                id="gender" 
-                name="gender"
-                type="text"
-                autoComplete="gender"
-                placeholder="Gender..."
-                required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+          <div className="flex gap-3">
+            <div className="flex-1">
+              <label
+                htmlFor="text"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Cinsiyet
+              </label>
+              <div className="mt-2">
+                <input
+                  id="gender"
+                  name="gender"
+                  type="text"
+                  autoComplete="gender"
+                  placeholder="Gender..."
+                  required
+                  className="input py-2"
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, gender: e.target.value })
+                  }
+                />
+              </div>
             </div>
-          </div>
-          <div>
-            <label
-              htmlFor="date"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Doğum Tarihi
-            </label>
-            <div className="mt-2">
-              <input
-                id="birthDate"
-                name="birthDate"
-                type="date"
-                autoComplete="birthDate"
-                required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
+            <div className="flex-1">
+              <label
+                htmlFor="date"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Doğum Tarihi
+              </label>
+              <div className="mt-2">
+                <input
+                  id="birthDate"
+                  name="birthDate"
+                  type="date"
+                  autoComplete="birthDate"
+                  required
+                  className="input py-2"
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, birthDate: e.target.value })
+                  }
+                />
+              </div>
             </div>
           </div>
 
@@ -135,7 +197,11 @@ export const SignUpForm = (props: ILoginFormProps) => {
                 autoComplete="current-password"
                 placeholder="Password..."
                 required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                minLength={6}
+                className="input py-2"
+                onChange={(e) =>
+                  setNewUser({ ...newUser, password: e.target.value })
+                }
               />
             </div>
           </div>
@@ -156,7 +222,11 @@ export const SignUpForm = (props: ILoginFormProps) => {
                 autoComplete="current-password"
                 placeholder="Password..."
                 required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                minLength={6}
+                className="input py-2"
+                onChange={(e) =>
+                  setNewUser({ ...newUser, password2: e.target.value })
+                }
               />
             </div>
           </div>
@@ -182,6 +252,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
           </a>
         </p>
       </div>
+      <ToastContainer />
     </div>
-  )
-}
+  );
+};

@@ -16,6 +16,7 @@ const Sefer = (props: ISeferProps) => {
 
   return (
     <div className="text-center mt-10 max-w-[1100px] mx-auto">
+      <h2 className="text-3xl">Koltuk Seçimi</h2>
       <div className="border flex-between p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
         <img width={100} height={50} src={searchParams.firmaResmi} />
         <div className="flex flex-col">
@@ -25,7 +26,7 @@ const Sefer = (props: ISeferProps) => {
         <div className="flex flex-col text-center">
           <div className="flex-center mb-3">
             <img src={seat.src} alt="" width={25} height={25} className="" />
-            <p className="ps-1">2+1</p>
+            <p className="ps-1">{searchParams.bosKoltukSayisi} boş koltuk</p>
           </div>
           <p>
             {searchParams.kalkisOtogari} {">"} {searchParams.varisOtogari}

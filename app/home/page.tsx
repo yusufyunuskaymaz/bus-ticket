@@ -7,6 +7,7 @@ import DatePicker from "@/components/DatePicker";
 import seat from "@/assets/images/seat.png"
 import Link from "next/link";
 import { UserContext, useUserContext } from "@/contexts/user-context";
+import {  toastWarnNotify } from "@/helpers/Toastify";
 
 export type ISeferler = {
   kalkisOtogari: string;
@@ -40,13 +41,18 @@ export const Home = () => {
   const [seferler, setSeferler] = useState<ISeferler[]>([]);
 
   const handleSubmit = async () => {
-    // if(data.date || data.fromWhere || data.toWhere){
-    //   window.alert("Lütfen bütün alanları doldurun")
-    // }
+    if(!data.toWhere || !data.fromWhere || !data.date){
+      toastWarnNotify("Lütfen bütün alanları doldurun...")
+      return
+    }
     const res = await fetch("http://localhost:3000/api/users").then((res) =>
       res.json()
     );
     setSeferler(res.seferler);
+    window.scroll({
+      top: 500,
+      behavior: "smooth",
+    });
   };
   const {currentUser} = useUserContext()
   console.log(currentUser,"deeee");
@@ -103,8 +109,8 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-[1100px] mx-auto py-10">
-        <h3 className="font-bold text-3xl text-center py-5">Uygun Seferler</h3>
+      <div className="max-w-[1100px] mx-auto">
+        <h3 className="font-bold text-3xl text-center mt-10 mb-10">Uygun Seferler</h3>
         {seferler && seferler?.map((item,index) => {
           return (
             <Link key={index+1}  href={{pathname:"/home/sefer", query:{...item}}}>
@@ -121,12 +127,12 @@ export const Home = () => {
               <div className="flex flex-col text-center">
                 <div className="flex-center mb-3">
                   <img src={seat.src} alt="" width={25} height={25} className="" />
-                <p className="ps-1">2+1</p>
+                <p className="ps-1">{item.bosKoltukSayisi} boş koltuk</p>
                 </div>
                 <p>{item.kalkisOtogari} {">"} {item.varisOtogari}</p>
               </div>
               <p className="text-xl font-bold">{item.fiyat} ₺</p>
-              <button className="w-auto">Bileti Al {'->'}</button>
+              <button className="button">Bileti Al {'->'}</button>
             </div>
             </Link>
           );
