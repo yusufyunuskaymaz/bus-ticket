@@ -10,21 +10,53 @@ import Image from "next/image";
 import male from "./male.svg";
 import female from "./female.svg";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Bus = () => {
-  const [selectedSeat, setSelectedSeat] = useState(0);
-  const [imgState, setImgState] = useState(seatBlue)
+  const error = (message: string) => toast.error(message);
+  const warning = (message: string) => toast.warning(message);
+  const success = (message: string) => toast.success(message);
+
+  const [selectedSeat, setSelectedSeat] = useState<number | boolean>();
+  const [customerSeats, setCustomerSeats] = useState<any[]>([]);
 
   let isSeatSelected;
+  let greenSeat;
 
-  const handleClick = (index: number) => {
-    setSelectedSeat(index);
+  const handleClick = (e: any, item: any) => {
+    // If the user clicks on the seat of his choice delete it from customerSeats
+    if (customerSeats.some((seat) => seat.id === item.id)) {
+      const newC = customerSeats.filter((seat) => seat.id !== item.id);
+      setCustomerSeats([...newC]);
+      setSelectedSeat(false)
+      return
+    }
+
+    if (item.isEmpty) {
+      if (customerSeats.length >= 5) {
+        warning("En fazla 5 koltuk seçebilirsiniz!");
+        return;
+      }
+      // open popper
+      setSelectedSeat(item.id);
+
+      // if user clicks to gender icons set ticket to customerSeats
+      if (e.target.className.includes("male")) {
+        const gender = e.target.className;
+        setCustomerSeats([
+          ...customerSeats,
+          { id: item.id, gender: gender, isEmpty: false },
+        ]);
+        // close popper
+        setSelectedSeat(false);
+      }
+    } else {
+      error("Bu koltuk zaten alınmış");
+    }
   };
 
-  const handleGender = (id:number,gender:string)=>{
-    console.log(id,gender);
-
-
-  }
+  console.log(customerSeats, "cuss");
 
   return (
     <div className="">
@@ -34,30 +66,31 @@ const Bus = () => {
       >
         <div className="flex flex-wrap h-full flex-col-reverse gap-3 ">
           {seatInfos.map((item, index) => {
-            // handleGender(item.id,item.gender)
-            isSeatSelected = selectedSeat === index;
+            isSeatSelected = selectedSeat === item.id;
+            greenSeat = customerSeats.some((seat) => seat.id == item.id);
 
+            let imgSrc = greenSeat
+              ? seatGreen.src
+              : item.isEmpty
+              ? seatWhite.src
+              : item.gender === "male"
+              ? seatBlue.src
+              : seatPing.src;
             return (
               <>
                 <div
-                  onClick={() => handleClick(index)}
+                  onClick={(e) => handleClick(e, item)}
                   className="relative my-3"
                 >
                   <Image
-                    className="mb-2 relative"
+                    className="mb-2 relative cursor-pointer"
                     width={33}
                     height={33}
-                    src={
-                      item.isEmpty
-                        ? seatWhite.src
-                        : item.gender === "male"
-                        ? seatBlue.src
-                        : seatPing.src
-                    }
+                    src={imgSrc}
                     alt="seat"
                   />
                   <p
-                    className="absolute l-5 font-normal text-base text-gray-500"
+                    className="absolute l-5 font-normal text-base text-gray-500 cursor-pointer"
                     style={{ bottom: "13px", left: "8px" }}
                   >
                     {item.id}
@@ -66,26 +99,25 @@ const Bus = () => {
                   {isSeatSelected && (
                     <div
                       style={{ top: "-130px", zIndex: "1", left: "-50px" }}
-                      className="absolute bg-white p-5 flex gap-3 shadow-xl rounded-lg"
+                      className="absolute bg-white p-5 flex gap-3 shadow-xl rounded-lg cursor-pointer"
                     >
                       <div className="pe-3">
                         <Image
+                          className="male"
                           src={male.src}
                           width={40}
                           height={40}
                           alt="male"
-                          onClick={()=>handleGender(item.id,"male")}
                         />
                         <p>Erkek</p>
                       </div>
                       <div>
                         <Image
+                          className="female"
                           src={female.src}
                           width={40}
                           height={40}
                           alt="female"
-                          onClick={()=>handleGender(item.id,"female")}
-
                         />
                         <p className="mt-1">Kadın</p>
                       </div>
@@ -96,34 +128,9 @@ const Bus = () => {
             );
           })}
         </div>
-        {/* <div className="flex flex-wrap gap-3 items-end">
-          {bottomSeats.map((item, index) => {
-            return (
-              <div key={index + 1} className="relative">
-                <img
-                  className="mb-2 relative"
-                  width={33}
-                  height={33}
-                  src={
-                    item.isEmpty
-                      ? seatWhite.src
-                      : item.gender === "male"
-                      ? seatBlue.src
-                      : seatPing.src
-                  }
-                  alt="seat"
-                />
-                <p
-                  className="absolute l-5 font-normal text-base text-gray-500"
-                  style={{ bottom: "13px", left: "5px", right: "15px" }}
-                >
-                  {item.id}
-                </p>
-              </div>
-            );
-          })}
-        </div> */}
+      
       </div>
+      <ToastContainer />
     </div>
   );
 };

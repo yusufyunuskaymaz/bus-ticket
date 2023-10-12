@@ -89,16 +89,16 @@ export const Home = () => {
                     <DatePicker data={data} setData={setData} />
                   </div>
                   <div className="flex-1 gap-3 flex items-end ">
-                    <button className="bg-gray-600 px-0 text-white border">
+                    <button className="bg-gray-600 px-0 text-white border button">
                       Bugün
                     </button>
-                    <button className="bg-white px-0 text-black border">
+                    <button className="bg-white px-0 text-black border button">
                       Yarın
                     </button>
                   </div>
                 </div>
               </div>
-              <button onClick={() => handleSubmit()}>Otobüs Bileti Bul</button>
+              <button className="button" onClick={() => handleSubmit()}>Otobüs Bileti Bul</button>
             </div>
           </div>
         </div>
