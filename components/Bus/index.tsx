@@ -77,7 +77,7 @@ const Bus = (props: IBusProps) => {
         setSelectedSeat(false);
       }
     } else {
-      toastErrorNotify("Bu koltuk zaten alınmış");
+      toastWarnNotify("Bu koltuk zaten alınmış");
     }
   };
 
