@@ -1,12 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import bgImg from "../../assets/images/bus-bg.jpg";
 import styles from "./style.module.css";
 import { AutoComplete } from "@/components/AutoComplete";
 import DatePicker from "@/components/DatePicker";
 import seat from "@/assets/images/seat.png"
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { UserContext, useUserContext } from "@/contexts/user-context";
 
 export type ISeferler = {
   kalkisOtogari: string;
@@ -30,7 +30,6 @@ export type IValues = {
 };
 
 export const Home = () => {
-  const router = useRouter()
   const date = new Date().toISOString().slice(0, 10);
   const initialState = {
     fromWhere: "",
@@ -49,7 +48,8 @@ export const Home = () => {
     );
     setSeferler(res.seferler);
   };
-  console.log(seferler,"seferler");
+  const {currentUser} = useUserContext()
+  console.log(currentUser,"deeee");
   return (
     <div className="">
       <div

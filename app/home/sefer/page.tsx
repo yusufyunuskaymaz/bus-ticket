@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import { ISeferler } from "../page";
 import seat from "@/assets/images/seat.png";
 import Bus from "@/components/Bus";
+import { UserContext } from "@/contexts/user-context";
 
 export type ISeferProps = {
   searchParams: ISeferler;
@@ -11,6 +12,7 @@ export type ISeferProps = {
 
 const Sefer = (props: ISeferProps) => {
   const { searchParams } = props;
+
 
   return (
     <div className="text-center mt-10 max-w-[1100px] mx-auto">
@@ -32,7 +34,7 @@ const Sefer = (props: ISeferProps) => {
         <p className="text-xl font-bold">{searchParams.fiyat} ₺</p>
         {/* <button className="w-auto">Bileti Al {"->"}</button> */}
       </div>
-      <Bus />
+      <Bus searchParams={searchParams} />
     </div>
   );
 };
