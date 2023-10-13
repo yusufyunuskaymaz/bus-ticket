@@ -25,7 +25,7 @@ function classNames(...classes:any) {
 export default function Navbar() {
 const pathName =  usePathname()
 let currentUser:any
-if(localStorage.getItem("currentUser")){
+if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
    currentUser = JSON.parse(localStorage.getItem("currentUser") || "")
 }else{
   currentUser = {}
@@ -33,7 +33,7 @@ if(localStorage.getItem("currentUser")){
 
   const {setCurrentUser} = useUserContext()
   const router =useRouter()
-  if (!currentUser.mail || pathName === "/login") {
+  if (!currentUser.mail || pathName == "/login") {
     // Kullanıcı giriş yapmamışsa Navbar'ı görüntüleme
     return null
   }
