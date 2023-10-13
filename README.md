@@ -8,6 +8,10 @@ Bu proje, otobüs bilet satış uygulamasının temel özelliklerini içerir. Ku
 - TypeScript ve Context API kullanılarak yazılmıştır.
 - Sefer verileri statik bir JSON dosyasından ve Next.js API Routes kullanılarak alınmıştır.
 
+```bash
+npm install
+```
+
 ## Sayfalar
 
 Proje içinde aşağıdaki sayfalar bulunur:
@@ -27,22 +31,21 @@ Proje içinde aşağıdaki sayfalar bulunur:
 ## Seferler
 
 Proje içinde İstanbul ve Ankara'dan Bursa ve İzmir'e sefer verisi bulunur. Bu seferlerin detayları proje dökümantasyonunda yer almaktadır.
-## Ankara-İzmir Seferler:
-## 1- 2023-10-13
-## 2- 2023-10-14
+Ankara-İzmir Seferler:
+1- 2023-10-13
+2- 2023-10-14
 
-### Ankara-Bursa Seferler:
-### 1- 2023-10-14
-### 2-2023-10-15
+Ankara-Bursa Seferler:
+1- 2023-10-14
+2-2023-10-15
 
-## İstanbul-İzmir Seferler:
-### 1- 2023-10-13
-### 2- 2023-10-14
+İstanbul-İzmir Seferler:
+1- 2023-10-13
+2- 2023-10-14
 
-### İstanbul-Bursa Seferler:
-### 1- 2023-10-14
-### 2- 2023-10-15
-
+İstanbul-Bursa Seferler:
+1- 2023-10-14
+2- 2023-10-15
 
 ## Proje Dökümantasyonu
 
