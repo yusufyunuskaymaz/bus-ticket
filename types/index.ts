@@ -37,6 +37,12 @@ export type ISeferler = {
     password2: string;
   };
 
+  export type User = {
+    mail: string;
+    password: string;
+    gender: string;
+  };
+
 
   export type IUser = {
     mail: string;
@@ -46,3 +52,9 @@ export type ISeferler = {
   export type ILoginFormProps = {
     setLogin: (value: boolean) => void;
   };
+
+  export type ISeatInfo = {
+    id:number;
+    isEmpty:boolean;
+    gender:string;
+  }

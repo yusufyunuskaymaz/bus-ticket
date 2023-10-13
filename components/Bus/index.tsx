@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import Link from "next/link";
 import { handleClick } from "@/lib/bus";
 import { useUserContext } from "@/contexts/user-context";
+import { ISeatInfo } from "@/types";
 
 type IBusProps = {
   searchParams: any;
@@ -21,10 +22,11 @@ type IBusProps = {
 const Bus = (props: IBusProps) => {
   const {currentUser} =  useUserContext()
   const { searchParams } = props;
+  let seatInfo : ISeatInfo[] = seatInfos
   
 
   const [selectedSeat, setSelectedSeat] = useState<number | boolean>();
-  const [customerSeats, setCustomerSeats] = useState<any[]>([]);
+  const [customerSeats, setCustomerSeats] = useState<ISeatInfo[]>([]);
 
   let isSeatSelected;
   let greenSeat;
@@ -37,7 +39,7 @@ const Bus = (props: IBusProps) => {
         style={{ backgroundColor: "#F3F6F9" }}
       >
         <div className="flex flex-wrap h-full flex-col-reverse gap-3 ">
-          {seatInfos.map((item, index) => {
+          {seatInfo.map((item, index) => {
             isSeatSelected = selectedSeat === item.id;
             greenSeat = customerSeats.some((seat) => seat.id == item.id);
 
@@ -59,7 +61,7 @@ const Bus = (props: IBusProps) => {
                       customerSeats,
                       setCustomerSeats,
                       setSelectedSeat,
-                      seatInfos
+                      seatInfo
                     )
                   }
                   className={`relative my-3 ${
@@ -133,7 +135,7 @@ const Bus = (props: IBusProps) => {
                       customerSeats,
                       setCustomerSeats,
                       setSelectedSeat,
-                      seatInfos
+                      seatInfo
                     )
                   }
                   className="relative my-3"

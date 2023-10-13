@@ -1,6 +1,7 @@
 import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
+import { INewUser } from "@/types";
 
-export const signUp = (e:any,newUser:any,allUsers:any,setLogin:any)=>{
+export const signUp = (e:React.FormEvent<HTMLFormElement>,newUser:INewUser,allUsers:INewUser[],setLogin:(isLogin:boolean)=>void)=>{
         e.preventDefault();
         if (newUser.password !== newUser.password2) {
           toastErrorNotify("Şifreler uyuşmuyor lütfen kontrol edin...");

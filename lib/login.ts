@@ -1,19 +1,19 @@
 import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
-import { INewUser } from "@/types";
+import { INewUser, IUser, User } from "@/types";
 
 
 
 export const login = (
-  e: any,
-  allUsers: any,
-  setCurrentUser: any,
-  user: any
+  e: React.FormEvent<HTMLFormElement>,
+  allUsers: INewUser[],
+  setCurrentUser:(currentUser: User) => void,
+  user: IUser
 ) => {
   e.preventDefault();
   if (localStorage.getItem("users")) {
     allUsers = JSON.parse(localStorage.getItem("users") || "");
     let currentUser: INewUser[] = allUsers.filter(
-      (item:any) => item.mail === user.mail
+      (item) => item.mail === user.mail
     );
     console.log(currentUser, "annn");
     if (currentUser.length == 1) {

@@ -1,7 +1,8 @@
 import { fetchData } from "@/app/home/page";
 import { toastWarnNotify } from "@/helpers/Toastify";
+import { ISeferler, IValues } from "@/types";
 
-export const getData = async (data:any,setSeferler:any) => {
+export const getData = async (data:IValues,setSeferler:(seferler: ISeferler[]) => void) => {
     const res = await fetchData(data);
     if (res.seferler[0]?.message) {
       toastWarnNotify(res.seferler[0]?.message);

@@ -1,4 +1,5 @@
 "use client"
+import { User } from "@/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 // import { userObserver } from '../auth/firebase';
 
@@ -11,11 +12,7 @@ type UserContext = {
   setCurrentUser: React.Dispatch<React.SetStateAction<User>>;
 };
 
-type User = {
-  mail: string;
-  password: string;
-  gender: string;
-};
+
 
 export const UserContext = createContext<UserContext | null>(null);
 
