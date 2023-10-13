@@ -24,7 +24,12 @@ function classNames(...classes:any) {
 
 export default function Navbar() {
 const pathName =  usePathname()
-const currentUser = JSON.parse(localStorage.getItem("currentUser") || "")
+let currentUser:any
+if(localStorage.getItem("currentUser")){
+   currentUser = JSON.parse(localStorage.getItem("currentUser") || "")
+}else{
+  currentUser = {}
+}
 
   const {setCurrentUser} = useUserContext()
   const router =useRouter()
