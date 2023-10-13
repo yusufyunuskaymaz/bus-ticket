@@ -10,18 +10,15 @@ import { UserContext, useUserContext } from "@/contexts/user-context";
 import { toastWarnNotify } from "@/helpers/Toastify";
 
 export type ISeferler = {
-  kalkisOtogari: string;
-  varisOtogari: string;
-  kalkisSehri: string;
-  varisSehri: string;
-  tarih: string;
-  kalkisSaat: string;
-  varisSaat: string;
-  sure: string;
-  bosKoltukSayisi: string;
-  fiyat: string;
-  firma: string;
-  firmaResmi: string;
+  fromWhere: string;
+  toWhere: string;
+  date: string;
+  departureTime: string;
+  totalTime: string;
+  emptySeats: string;
+  price: string;
+  company: string;
+  companyImage: string;
 };
 
 export type IValues = {
@@ -31,10 +28,10 @@ export type IValues = {
 };
 
 export const fetchData = async (data: IValues) => {
-  const res = await fetch(`http://localhost:3000/api/users`,{
-    method: 'POST',
+  const res = await fetch(`http://localhost:3000/api/users`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
@@ -56,10 +53,15 @@ export const Home = () => {
     if (isDataFetched) {
       const getData = async () => {
         const res = await fetchData(data);
+        if (res.seferler[0]?.message) {
+          toastWarnNotify(res.seferler[0]?.message);
+          setSeferler([]);
+          return;
+        }
         setSeferler(res.seferler);
       };
       getData();
-      setIsDataFetched(false)
+      setIsDataFetched(false);
     }
   }, [isDataFetched]);
 
@@ -77,9 +79,11 @@ export const Home = () => {
   };
   // const { currentUser } = useUserContext();
   // console.log(currentUser, "deeee");
-  console.log(data,"eeee");
+  console.log(data, "eeee");
   return (
-    <div className="">
+    <>
+     
+
       <div
         className={`${styles.hero} text-white font-bold text-3xl border-white`}
       >
@@ -117,16 +121,16 @@ export const Home = () => {
                     <DatePicker data={data} setData={setData} />
                   </div>
                   <div className="flex-1 gap-3 flex items-end ">
-                    <button className="bg-gray-600 px-0 text-white border button">
+                    <button onClick={()=>setData({...data,date:date})} className="flex-1 bg-gray-600 px-0 text-white border button">
                       Bugün
                     </button>
-                    <button className="bg-white px-0 text-black border button">
+                    <button onClick={()=>setData({...data,date: new Date(Date.now() + 86400000).toISOString().slice(0, 10)})} className="flex-1 button bg-transparent px-0 text-black border ">
                       Yarın
                     </button>
-                  </div>
+                  </div> 
                 </div>
               </div>
-              <button className="button" onClick={() => handleSubmit()}>
+              <button className="button w-full" onClick={() => handleSubmit()}>
                 Otobüs Bileti Bul
               </button>
             </div>
@@ -145,11 +149,11 @@ export const Home = () => {
                 href={{ pathname: "/home/sefer", query: { ...item } }}
               >
                 <div className="border flex-between p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
-                  <img width={100} height={50} src={item.firmaResmi} />
+                  <img width={100} height={50} src={item.companyImage} />
                   <div className="flex flex-col">
-                    <p className="font-normal text-xl">{item.kalkisSaat}</p>
+                    <p className="font-normal text-xl">{item.departureTime}</p>
                     <p className="font-normal text-sm text-gray-400">
-                      {item.sure}
+                      {item.totalTime}
                     </p>
                   </div>
                   <div className="flex flex-col text-center">
@@ -161,20 +165,21 @@ export const Home = () => {
                         height={25}
                         className=""
                       />
-                      <p className="ps-1">{item.bosKoltukSayisi} boş koltuk</p>
+                      <p className="ps-1">{item.emptySeats} boş koltuk</p>
                     </div>
                     <p>
-                      {item.kalkisOtogari} {">"} {item.varisOtogari}
+                      {item.fromWhere} Otogarı {">"} {item.toWhere} Otogarı
                     </p>
                   </div>
-                  <p className="text-xl font-bold">{item.fiyat} ₺</p>
+                  <p className="text-xl font-bold">{item.price} ₺</p>
                   <button className="button">Bileti Al {"->"}</button>
                 </div>
               </Link>
             );
           })}
       </div>
-    </div>
+      <div className="flex items-center justify-center w-full h-full"></div>
+    </>
   );
 };
 

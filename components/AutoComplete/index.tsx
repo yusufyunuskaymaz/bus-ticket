@@ -3,10 +3,13 @@ import React, { useState } from "react";
 import Select from "react-select";
 import { IValues } from "@/app/home/page";
 
-const options = [
+const options1 = [
   { value: "istanbul", label: "İstanbul" },
   { value: "ankara", label: "Ankara" },
-  { value: "izmir", label: "İzmir" },
+];
+const options2 = [
+  { value: "İzmir", label: "İzmir" },
+  { value: "Bursa", label: "Bursa" },
 ];
 
 export type ISelect = {
@@ -33,7 +36,7 @@ export const AutoComplete = (props: IAutoCompleteProps) => {
     <>
       <Select
         className="text-black text-sm"
-        options={options}
+        options={direction == "nereden" ? options1 : options2}
         placeholder="Bir şehir seçin..."
         isClearable={true}
         onChange={(value) => handleChange(value)}
