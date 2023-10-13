@@ -10,13 +10,17 @@ const Payment = (props:any) => {
   console.log(searchParams);
  const router =  useRouter()
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = (e:any) => {
     e.preventDefault()
+
     setLoading(true)
+
     setTimeout(() => {
       setLoading(false)
       toastSuccessNotify("Başarılı")
     }, 2000);
+    
   };
   useEffect(() => {
     

@@ -9,79 +9,26 @@ import { seatInfos } from "./dummyData";
 import Image from "next/image";
 import male from "./male.svg";
 import female from "./female.svg";
-
 import { ToastContainer } from "react-toastify";
 import Link from "next/link";
-import { toastErrorNotify, toastWarnNotify } from "@/helpers/Toastify";
+import { handleClick } from "@/lib/bus";
+import { useUserContext } from "@/contexts/user-context";
 
 type IBusProps = {
   searchParams: any;
 };
 
 const Bus = (props: IBusProps) => {
+  const {currentUser} =  useUserContext()
   const { searchParams } = props;
+  
 
   const [selectedSeat, setSelectedSeat] = useState<number | boolean>();
   const [customerSeats, setCustomerSeats] = useState<any[]>([]);
 
   let isSeatSelected;
   let greenSeat;
-  let gender = "male";
-
-  const handleClick = (e: any, item: any) => {
-    // If the user clicks on the seat of his choice delete it from customerSeats
-    if (customerSeats.some((seat) => seat.id === item.id)) {
-      const newC = customerSeats.filter((seat) => seat.id !== item.id);
-      setCustomerSeats([...newC]);
-      setSelectedSeat(false);
-      return;
-    }
-
-    if (item.isEmpty) {
-      if (customerSeats.length >= 5) {
-        toastWarnNotify("En fazla 5 koltuk seçebilirsiniz!");
-        return;
-      }
-      // open popper
-      setSelectedSeat(item.id);
-
-      // if user clicks to gender icons set ticket to customerSeats
-      if (e.target.className.includes("male")) {
-        // if user choose different gender give error
-        let nextOrPrev = item.id % 2 == 0 ? -1 : 1;
-        const gender = e.target.className;
-        if (!seatInfos[item.id - 1 + nextOrPrev].gender) {
-          setCustomerSeats([
-            ...customerSeats,
-            { id: item.id, gender: gender, isEmpty: false },
-          ]);
-          // close popper
-          setSelectedSeat(false);
-          return;
-        } else {
-          if (seatInfos[item.id - 1 + nextOrPrev].gender != gender) {
-            toastWarnNotify(
-              `Seçtiğiniz koltuk yalnızca ${
-                gender === "male" ? "kadın" : "erkek"
-              } yolculara satılabilir.`
-            );
-            setSelectedSeat(false);
-            return;
-          }
-        }
-        setCustomerSeats([
-          ...customerSeats,
-          { id: item.id, gender: gender, isEmpty: false },
-        ]);
-        // close popper
-        setSelectedSeat(false);
-      }
-    } else {
-      toastWarnNotify("Bu koltuk zaten alınmış");
-    }
-  };
-
-  console.log(customerSeats, "cuss");
+  let gender = currentUser.gender
 
   return (
     <div className="flex  ">
@@ -105,7 +52,16 @@ const Bus = (props: IBusProps) => {
               <>
                 <div
                   key={item.id}
-                  onClick={(e) => handleClick(e, item)}
+                  onClick={(e) =>
+                    handleClick(
+                      e,
+                      item,
+                      customerSeats,
+                      setCustomerSeats,
+                      setSelectedSeat,
+                      seatInfos
+                    )
+                  }
                   className={`relative my-3 ${
                     item.id % 2 == 0 ? "pt-5 border-t-2" : ""
                   }`}
@@ -170,7 +126,16 @@ const Bus = (props: IBusProps) => {
               return (
                 <div
                   key={item.id}
-                  onClick={(e) => handleClick(e, item)}
+                  onClick={(e) =>
+                    handleClick(
+                      e,
+                      item,
+                      customerSeats,
+                      setCustomerSeats,
+                      setSelectedSeat,
+                      seatInfos
+                    )
+                  }
                   className="relative my-3"
                 >
                   <Image
@@ -200,7 +165,12 @@ const Bus = (props: IBusProps) => {
           )}
         </div>
 
-        <Link href={{pathname:"/payment", query:{price:searchParams.price*customerSeats.length}}}>
+        <Link
+          href={{
+            pathname: "/payment",
+            query: { price: searchParams.price * customerSeats.length },
+          }}
+        >
           <button
             className={`button mb-5 ${
               customerSeats.length == 0 && "cursor-not-allowed opacity-50"

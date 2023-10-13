@@ -1,54 +1,30 @@
 "use client";
 import React, { useState } from "react";
 import { INewUser } from "@/types";
-import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useUserContext,UserContext } from "@/contexts/user-context";
-
-
-export type ILoginFormProps = {
-  setLogin: (value: boolean) => void;
-};
+import { useUserContext } from "@/contexts/user-context";
+import { login } from "@/lib/login";
+import { IUser, ILoginFormProps } from "@/types";
+import { useRouter } from "next/navigation";
 
 export const LoginForm = (props: ILoginFormProps) => {
-  const {setCurrentUser,currentUser} = useUserContext()
-
   const router = useRouter();
-  type IUser = {
-    mail: string;
-    password: string;
-  };
+  const { setLogin } = props;
   let allUsers: INewUser[];
 
+  const { setCurrentUser } = useUserContext();
   const [user, setUser] = useState<IUser>({ mail: "", password: "" });
-  const { setLogin } = props;
+
   const handleSubmit = (e: any) => {
-    e.preventDefault();
-    if (localStorage.getItem("users")) {
-      allUsers = JSON.parse(localStorage.getItem("users") || "");
-      let currentUser2: INewUser[] = allUsers.filter(
-        (item) => item.mail === user.mail
-      );
-      console.log(currentUser2,"annn");
-      if (currentUser2.length == 1) {
-        if (
-          currentUser2[0].mail === user.mail &&
-          currentUser2[0].password === user.password
-        ) {
-          setCurrentUser({...user,gender:currentUser2[0].gender})
-          toastSuccessNotify("Giriş başarılı! Ana sayfaya gidiliyor...");
-          setTimeout(() => {
-            router.push("/home");
-          }, 3000);
-        } else {
-          toastErrorNotify("Kullanıcı adı ya da şifre yanlış");
-        }
-      } else {
-        toastErrorNotify("Böyle bir kullanıcı yok");
-      }
+    const value = login(e, allUsers, setCurrentUser, user);
+    console.log(value, "value");
+    if (value?.push) {
+      setTimeout(() => {
+        router.push("/home");
+      }, 3000);
     }
   };
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12">
       <div className="">
@@ -120,10 +96,7 @@ export const LoginForm = (props: ILoginFormProps) => {
           </div>
 
           <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
+            <button type="submit" className="button w-full">
               Login
             </button>
           </div>

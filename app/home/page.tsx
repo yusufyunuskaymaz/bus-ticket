@@ -11,10 +11,12 @@ import { toastWarnNotify } from "@/helpers/Toastify";
 import { ISeferler, IValues } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { getData, handleSubmit } from "@/lib/homePage";
 
 export const Home = () => {
-  const router = useRouter()
-  const {currentUser} = useUserContext()
+  const router = useRouter();
+  const { currentUser } = useUserContext();
+
   useEffect(() => {
     currentUser.mail ? router.push("/home") : router.push("/login");
   }, []);
@@ -25,40 +27,23 @@ export const Home = () => {
     toWhere: "",
     date: date,
   };
+
   const [data, setData] = useState<IValues>(initialState);
   const [seferler, setSeferler] = useState<ISeferler[]>([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
-  const getData = async () => {
-    const res = await fetchData(data);
-    if (res.seferler[0]?.message) {
-      toastWarnNotify(res.seferler[0]?.message);
-      setSeferler([]);
-      return;
-    }
-    setSeferler(res.seferler);
-  };
+
+
+  // starting fetch
 
   useEffect(() => {
     if (isDataFetched) {
-      
-      getData();
+      getData(data,setSeferler);
       setIsDataFetched(false);
     }
   }, [isDataFetched]);
 
-  const handleSubmit = () => {
-    if (!data.toWhere || !data.fromWhere || !data.date) {
-      toastWarnNotify("Lütfen bütün alanları doldurun...");
-      return;
-    }
-    setIsDataFetched(true);
 
-    window.scroll({
-      top: 500,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <>
@@ -121,7 +106,7 @@ export const Home = () => {
                   </div>
                 </div>
               </div>
-              <button className="button w-full" onClick={() => handleSubmit()}>
+              <button className="button w-full" onClick={() => handleSubmit(data,setIsDataFetched)}>
                 Otobüs Bileti Bul
               </button>
             </div>

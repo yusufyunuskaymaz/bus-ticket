@@ -36,3 +36,13 @@ export type ISeferler = {
     password: string;
     password2: string;
   };
+
+
+  export type IUser = {
+    mail: string;
+    password: string;
+  };
+
+  export type ILoginFormProps = {
+    setLogin: (value: boolean) => void;
+  };

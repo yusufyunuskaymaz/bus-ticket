@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { ILoginFormProps } from "./LoginForm";
+import { ILoginFormProps } from "@/types"; 
 import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
 import { ToastContainer } from "react-toastify";
 import { INewUser } from "@/types";
+import { signUp } from "@/lib/signUp";
 
 export const SignUpForm = (props: ILoginFormProps) => {
   const { setLogin } = props;
-
   const user = {
     name: "",
     surname: "",
@@ -21,29 +21,10 @@ export const SignUpForm = (props: ILoginFormProps) => {
   let allUsers: INewUser[];
 
   const [newUser, setNewUser] = useState<INewUser>(user);
-  console.log(newUser);
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    if (newUser.password !== newUser.password2) {
-      toastErrorNotify("Şifreler uyuşmuyor lütfen kontrol edin...");
-    } else {
-      if (localStorage.getItem("users")) {
-        allUsers = JSON.parse(localStorage.getItem("users") || "");
-        // check if user exists
-        if (allUsers.some((user) => user.mail == newUser.mail)) {
-          toastErrorNotify("Bu e postayla kayıtlı kullanıcı var!");
-          return;
-        }
-      } else {
-        allUsers = [];
-      }
-      localStorage.setItem("users", JSON.stringify([...allUsers, newUser]));
-      toastSuccessNotify("Tebrikler! Kullanıcı kaydı oluşturuldu");
-      setTimeout(() => {
-        setLogin(true);
-      }, 3000);
-    }
-  };
+
+  const handleSubmit = (e:any)=>{
+      signUp(e,newUser,allUsers,setLogin)
+  }
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 pt-4 lg:px-8">
@@ -223,7 +204,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 px-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="button w-full"
             >
               Sign Up
             </button>
