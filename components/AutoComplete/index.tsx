@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import Select from "react-select";
-import { IValues } from "@/app/home/page";
+import { IValues,ISelect,IAutoCompleteProps } from "@/types";
 
 const options1 = [
   { value: "istanbul", label: "İstanbul" },
@@ -12,16 +12,9 @@ const options2 = [
   { value: "Bursa", label: "Bursa" },
 ];
 
-export type ISelect = {
-  value: string;
-  label: string;
-} | null;
 
-export type IAutoCompleteProps = {
-  direction?: string;
-  setData: (value: IValues) => void;
-  data: IValues;
-};
+
+
 
 export const AutoComplete = (props: IAutoCompleteProps) => {
   const { direction, setData, data } = props;

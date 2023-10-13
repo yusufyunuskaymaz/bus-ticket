@@ -70,7 +70,7 @@ const Payment = (props:any) => {
               </div>
             </div>
               <div>
-                <p >Toplam Fiyat : <span className="font-bold text-gray-700">{searchParams.fiyat} Tl</span> </p>
+                <p >Toplam Fiyat : <span className="font-bold text-gray-700">{searchParams.price} Tl</span> </p>
               </div>
           </div>
           <div className={`${loading  && "opacity-50" } `}>

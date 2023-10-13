@@ -8,35 +8,8 @@ import seat from "@/assets/images/seat.png";
 import Link from "next/link";
 import { UserContext, useUserContext } from "@/contexts/user-context";
 import { toastWarnNotify } from "@/helpers/Toastify";
-
-export type ISeferler = {
-  fromWhere: string;
-  toWhere: string;
-  date: string;
-  departureTime: string;
-  totalTime: string;
-  emptySeats: string;
-  price: string;
-  company: string;
-  companyImage: string;
-};
-
-export type IValues = {
-  fromWhere: string;
-  toWhere: string;
-  date: string;
-};
-
-export const fetchData = async (data: IValues) => {
-  const res = await fetch(`http://localhost:3000/api/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return res.json();
-};
+import { ISeferler, IValues } from "@/types";
+import Image from "next/image";
 
 export const Home = () => {
   const date = new Date().toISOString().slice(0, 10);
@@ -49,17 +22,19 @@ export const Home = () => {
   const [seferler, setSeferler] = useState<ISeferler[]>([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
+  const getData = async () => {
+    const res = await fetchData(data);
+    if (res.seferler[0]?.message) {
+      toastWarnNotify(res.seferler[0]?.message);
+      setSeferler([]);
+      return;
+    }
+    setSeferler(res.seferler);
+  };
+
   useEffect(() => {
     if (isDataFetched) {
-      const getData = async () => {
-        const res = await fetchData(data);
-        if (res.seferler[0]?.message) {
-          toastWarnNotify(res.seferler[0]?.message);
-          setSeferler([]);
-          return;
-        }
-        setSeferler(res.seferler);
-      };
+      
       getData();
       setIsDataFetched(false);
     }
@@ -77,13 +52,9 @@ export const Home = () => {
       behavior: "smooth",
     });
   };
-  // const { currentUser } = useUserContext();
-  // console.log(currentUser, "deeee");
-  console.log(data, "eeee");
+
   return (
     <>
-     
-
       <div
         className={`${styles.hero} text-white font-bold text-3xl border-white`}
       >
@@ -121,13 +92,26 @@ export const Home = () => {
                     <DatePicker data={data} setData={setData} />
                   </div>
                   <div className="flex-1 gap-3 flex items-end ">
-                    <button onClick={()=>setData({...data,date:date})} className="flex-1 bg-gray-600 px-0 text-white border button">
+                    <button
+                      onClick={() => setData({ ...data, date: date })}
+                      className="flex-1 bg-gray-600 px-0 text-white border button"
+                    >
                       Bugün
                     </button>
-                    <button onClick={()=>setData({...data,date: new Date(Date.now() + 86400000).toISOString().slice(0, 10)})} className="flex-1 button bg-transparent px-0 text-black border ">
+                    <button
+                      onClick={() =>
+                        setData({
+                          ...data,
+                          date: new Date(Date.now() + 86400000)
+                            .toISOString()
+                            .slice(0, 10),
+                        })
+                      }
+                      className="flex-1 button bg-transparent px-0 text-black border "
+                    >
                       Yarın
                     </button>
-                  </div> 
+                  </div>
                 </div>
               </div>
               <button className="button w-full" onClick={() => handleSubmit()}>
@@ -149,7 +133,12 @@ export const Home = () => {
                 href={{ pathname: "/home/sefer", query: { ...item } }}
               >
                 <div className="border flex-between p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
-                  <img width={100} height={50} src={item.companyImage} />
+                  <Image
+                    width={100}
+                    height={50}
+                    src={item.companyImage}
+                    alt="logo"
+                  />
                   <div className="flex flex-col">
                     <p className="font-normal text-xl">{item.departureTime}</p>
                     <p className="font-normal text-sm text-gray-400">
@@ -158,12 +147,11 @@ export const Home = () => {
                   </div>
                   <div className="flex flex-col text-center">
                     <div className="flex-center mb-3">
-                      <img
+                      <Image
                         src={seat.src}
-                        alt=""
                         width={25}
                         height={25}
-                        className=""
+                        alt="seat-image"
                       />
                       <p className="ps-1">{item.emptySeats} boş koltuk</p>
                     </div>
@@ -184,3 +172,14 @@ export const Home = () => {
 };
 
 export default Home;
+
+export const fetchData = async (data: IValues) => {
+  const res = await fetch(`http://localhost:3000/api/users`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+};

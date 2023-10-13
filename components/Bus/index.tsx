@@ -192,15 +192,15 @@ const Bus = (props: IBusProps) => {
           </div>
           {customerSeats.length >= 1 && (
             <div className="flex flex-col items-start mt-5">
-              <p className="text-base">Toplam Fiyat</p>
+              <p className="text-base">Toplam fiyat:</p>
               <p className="font-bold text-2xl text-gray-500">
-                {customerSeats.length * searchParams.fiyat} Tl
+                {customerSeats.length * searchParams.price} Tl
               </p>
             </div>
           )}
         </div>
 
-        <Link href={{pathname:"/payment", query:{fiyat:searchParams.fiyat*customerSeats.length}}}>
+        <Link href={{pathname:"/payment", query:{price:searchParams.price*customerSeats.length}}}>
           <button
             className={`button mb-5 ${
               customerSeats.length == 0 && "cursor-not-allowed opacity-50"

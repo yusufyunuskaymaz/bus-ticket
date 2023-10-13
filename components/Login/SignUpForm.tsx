@@ -3,19 +3,10 @@ import React, { useState } from "react";
 import { ILoginFormProps } from "./LoginForm";
 import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
 import { ToastContainer } from "react-toastify";
+import { INewUser } from "@/types";
 
-export type INewUser = {
-  name: string;
-  surname: string;
-  mail: string;
-  gender: string;
-  birthDate: string;
-  password: string;
-  password2: string;
-};
 export const SignUpForm = (props: ILoginFormProps) => {
   const { setLogin } = props;
-
 
   const user = {
     name: "",
@@ -27,7 +18,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
     password2: "",
   };
 
-  let allUsers: INewUser[]
+  let allUsers: INewUser[];
 
   const [newUser, setNewUser] = useState<INewUser>(user);
   console.log(newUser);
@@ -36,17 +27,15 @@ export const SignUpForm = (props: ILoginFormProps) => {
     if (newUser.password !== newUser.password2) {
       toastErrorNotify("Şifreler uyuşmuyor lütfen kontrol edin...");
     } else {
-      
-      if(localStorage.getItem("users")){
+      if (localStorage.getItem("users")) {
         allUsers = JSON.parse(localStorage.getItem("users") || "");
-        // check if user exists 
-        if(allUsers.some(user=>user.mail == newUser.mail)){
-          toastErrorNotify("Bu e postayla kayıtlı kullanıcı var!")
-          return
+        // check if user exists
+        if (allUsers.some((user) => user.mail == newUser.mail)) {
+          toastErrorNotify("Bu e postayla kayıtlı kullanıcı var!");
+          return;
         }
-        
-      }else{
-        allUsers = []
+      } else {
+        allUsers = [];
       }
       localStorage.setItem("users", JSON.stringify([...allUsers, newUser]));
       toastSuccessNotify("Tebrikler! Kullanıcı kaydı oluşturuldu");

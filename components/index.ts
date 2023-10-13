@@ -1,5 +1,7 @@
-import {Login} from "./Login/Login";
+import Login from "./Login";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export {
-    Login,
-}
+    Login,Navbar,Footer
+}   

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {IAutoCompleteProps} from "../AutoComplete"
+import {IAutoCompleteProps} from "@/types"
 
 export default function DatePicker(props:IAutoCompleteProps) {
   const {data,setData} = props
