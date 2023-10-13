@@ -21,7 +21,8 @@ export const login = (
         currentUser[0].mail === user.mail &&
         currentUser[0].password === user.password
       ) {
-        setCurrentUser({ ...user, gender: currentUser[0].gender });
+        setCurrentUser({ ...user, gender: currentUser[0].gender,name: currentUser[0].name});
+        localStorage.setItem("currentUser",JSON.stringify({...user, gender: currentUser[0].gender,name: currentUser[0].name} ))
         toastSuccessNotify("Giriş başarılı! Ana sayfaya gidiliyor...");
           return {push:true}
       } else {

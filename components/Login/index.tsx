@@ -12,7 +12,8 @@ import { SignUpForm } from "./SignUpForm";
         <Image
           src="https://app.spechy.com/static/media/coverpage.bb2c31f3.png"
           alt="bus"
-          width={500}
+          width={700}
+          className="max-w-[800]"
           height={500}
         />
       </div>

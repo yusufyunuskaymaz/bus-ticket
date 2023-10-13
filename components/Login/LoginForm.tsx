@@ -6,6 +6,8 @@ import { useUserContext } from "@/contexts/user-context";
 import { login } from "@/lib/login";
 import { IUser, ILoginFormProps } from "@/types";
 import { useRouter } from "next/navigation";
+import logo from "@/assets/images/logoApp.svg"
+
 
 export const LoginForm = (props: ILoginFormProps) => {
   const router = useRouter();
@@ -15,7 +17,7 @@ export const LoginForm = (props: ILoginFormProps) => {
   const { setCurrentUser } = useUserContext();
   const [user, setUser] = useState<IUser>({ mail: "", password: "" });
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const value = login(e, allUsers, setCurrentUser, user);
     console.log(value, "value");
     if (value?.push) {
@@ -30,7 +32,7 @@ export const LoginForm = (props: ILoginFormProps) => {
       <div className="">
         <Image
           className="mx-auto h-10 w-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+          src={logo.src}
           alt="Your Company"
           width={45}
           height={45}

@@ -1,16 +1,19 @@
 "use client"
-import { Fragment } from 'react'
+import { Fragment,useState } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { useUserContext } from '@/contexts/user-context'
-import { useRouter } from 'next/navigation'
+import {  useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
+import logo from "@/assets/images/logoApp.svg"
+import { toastSuccessNotify } from '@/helpers/Toastify'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Anasayfa', href: '/home', current: true },
+  { name: 'Hakkımızda', href: '#', current: false },
+  { name: 'Takvim', href: '#', current: false },
+  { name: 'İletişim', href: '#', current: false },
 ]
 
 function classNames(...classes:any) {
@@ -18,12 +21,22 @@ function classNames(...classes:any) {
 }
 
 
+
 export default function Navbar() {
+const pathName =  usePathname()
+const currentUser = JSON.parse(localStorage.getItem("currentUser") || "")
+
+  const {setCurrentUser} = useUserContext()
   const router =useRouter()
-  const {currentUser,setCurrentUser} = useUserContext()
+  if (!currentUser.mail || pathName === "/login") {
+    // Kullanıcı giriş yapmamışsa Navbar'ı görüntüleme
+    return null
+  }
+  
   const handleSubmit = ()=>{
     setCurrentUser({mail:"",password:"",gender:""})
-    router.push("/")
+    localStorage.setItem("currentUser",JSON.stringify({mail:"",password:"",gender:""}))
+    router.push("/login")
   }
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -46,11 +59,12 @@ export default function Navbar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
                   <Image
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                    src={logo.src}
+                    className="h-8 w-auto cursor-pointer"
                     alt="Your Company"
                     width={50}
                     height={50}
+                    onClick={()=>router.push("/home")}
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -71,9 +85,7 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
-              <p className='text-white'>{currentUser.mail}</p>
-              <p className='text-white'>{currentUser.password}</p>
-              <p className='text-white'>{currentUser.gender}</p>
+              <p className='text-white'>{currentUser.name?.toLocaleUpperCase()}</p>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"
@@ -115,7 +127,7 @@ export default function Navbar() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Your Profile
+                            Profiliniz
                           </a>
                         )}
                       </Menu.Item>
@@ -125,7 +137,7 @@ export default function Navbar() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
-                            Settings
+                            Ayarlar
                           </a>
                         )}
                       </Menu.Item>
@@ -135,7 +147,7 @@ export default function Navbar() {
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             onClick={()=>handleSubmit()}                          >
-                            Sign out
+                            Çıkış Yap
                           </a>
                         )}
                       </Menu.Item>

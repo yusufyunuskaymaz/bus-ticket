@@ -20,6 +20,7 @@ const user = {
   mail: "",
   password: "",
   gender: "",
+  name:""
 }
 
 

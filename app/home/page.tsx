@@ -18,7 +18,8 @@ export const Home = () => {
   const { currentUser } = useUserContext();
 
   useEffect(() => {
-    currentUser.mail ? router.push("/home") : router.push("/login");
+    const lStorageUser = JSON.parse(localStorage.getItem("currentUser") || "")
+    lStorageUser?.mail ? router.push("/home") : router.push("/login");
   }, []);
 
   const date = new Date().toISOString().slice(0, 10);

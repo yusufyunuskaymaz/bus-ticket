@@ -41,6 +41,7 @@ export type ISeferler = {
     mail: string;
     password: string;
     gender: string;
+    name?:string;
   };
 
 
