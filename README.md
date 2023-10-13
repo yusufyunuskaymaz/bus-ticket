@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Lojiper Web Uygulama
 
-## Getting Started
+Bu proje, otobüs bilet satış uygulamasının temel özelliklerini içerir. Kullanıcılar bu uygulama üzerinden bilet arayışlarını sorgulayabilir, bilet satın alabilir ve ödemelerini gerçekleştirebilirler.
 
-First, run the development server:
+## Teknik Detaylar
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Proje Next.js kullanılarak geliştirilmiştir ve güncel Next.js sürümü ile uyumludur.
+- TypeScript ve Context API kullanılarak yazılmıştır.
+- Sefer verileri statik bir JSON dosyasından ve Next.js API Routes kullanılarak alınmıştır.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Sayfalar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Proje içinde aşağıdaki sayfalar bulunur:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **Login Sayfası:** Kullanıcıların giriş yapabileceği sayfadır. Kullanıcı adı ve şifre ile giriş yapabilirler. İlk defa giriş yapan kullanıcılar için kayıt ol sayfasına yönlendirme yapılır.
 
-## Learn More
+- **Kayıt Ol Sayfası:** Kullanıcıların kayıt olabileceği sayfadır. E-posta, şifre, ad, soyad, cinsiyet, doğum tarihi gibi bilgileri girmeleri gerekir.
 
-To learn more about Next.js, take a look at the following resources:
+- **Anasayfa:** Kullanıcılar bu sayfada sefer ile ilgili bilgiler girebilirler. Sayfada kalkış yeri, varış yeri ve tarih seçimi yapabilirler. Ardından "Ara" butonu ile seferler listelenir.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Sorgu Sonuçları Sayfası:** Anasayfada girilen bilgilere göre listelenen seferlerin bilgileri burada görüntülenir. Seferlere tıklanarak bilet satış sayfasına yönlendirme yapılabilir.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Bilet Satış Sayfası:** Seçilen seferin detayları ve fiyatı gösterilir. Koltuk seçimi yapılabilir. Otobüs düzeni 2 sıra çift koltuk şeklinde olup, koltuklar dolu veya boş olabilir. Kullanıcı koltuk seçimlerini yaparken ücret alanı güncellenir.
 
-## Deploy on Vercel
+- **Ödeme Sayfası:** Kullanıcı bu sayfada ödeme formunu doldurur ve onayladığında ödeme işlemi gerçekleştirilir.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Seferler
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Proje içinde İstanbul ve Ankara'dan Bursa ve İzmir'e sefer verisi bulunur. Bu seferlerin detayları proje dökümantasyonunda yer almaktadır.
+## Ankara-İzmir Seferler:
+## 1- 2023-10-13
+## 2- 2023-10-14
+
+## Ankara-Bursa Seferler:
+## 1- 2023-10-14
+## 2-)2023-10-15
+
+## İstanbul-İzmir Seferler:
+## 1- 2023-10-13
+## 2- 2023-10-14
+
+## İstanbul-Bursa Seferler:
+
+
+## Proje Dökümantasyonu
+
+Proje ile ilgili daha fazla detay ve seferlerin detaylı bilgileri proje dökümantasyonunda bulunur. Dökümantasyonu okuyarak proje ile ilgili tüm bilgilere ulaşabilirsiniz.
+
+## Lisans
+
+Bu proje [MIT lisansı](LICENSE) ile lisanslanmıştır.
