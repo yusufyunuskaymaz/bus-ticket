@@ -8,20 +8,21 @@ type UserContextProviderProps = {
 
 type UserContext = {
   currentUser: User ;
+  setCurrentUser: React.Dispatch<React.SetStateAction<User>>;
 };
 
 type User = {
-  name: string;
-  surname: string;
+  mail: string;
+  password: string;
   gender: string;
 };
 
 export const UserContext = createContext<UserContext | null>(null);
 
 const user = {
-  name: "Yusuf",
-  surname: "Kaymaz",
-  gender: "male",
+  mail: "",
+  password: "",
+  gender: "",
 }
 
 
@@ -29,7 +30,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [currentUser, setCurrentUser] = useState<User>(user);
 
   return (
-    <UserContext.Provider value={{ currentUser }}>
+    <UserContext.Provider value={{ currentUser,setCurrentUser }}>
       {children}
     </UserContext.Provider>
   );

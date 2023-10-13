@@ -3,6 +3,8 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
+import { useUserContext } from '@/contexts/user-context'
+import { useRouter } from 'next/navigation'
 
 const navigation = [
   { name: 'Dashboard', href: '#', current: true },
@@ -15,7 +17,14 @@ function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
 }
 
+
 export default function Navbar() {
+  const router =useRouter()
+  const {currentUser,setCurrentUser} = useUserContext()
+  const handleSubmit = ()=>{
+    setCurrentUser({mail:"",password:"",gender:""})
+    router.push("/")
+  }
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -62,6 +71,9 @@ export default function Navbar() {
                   </div>
                 </div>
               </div>
+              <p className='text-white'>{currentUser.mail}</p>
+              <p className='text-white'>{currentUser.password}</p>
+              <p className='text-white'>{currentUser.gender}</p>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"
@@ -122,7 +134,7 @@ export default function Navbar() {
                           <a
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
+                            onClick={()=>handleSubmit()}                          >
                             Sign out
                           </a>
                         )}

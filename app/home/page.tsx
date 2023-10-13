@@ -10,8 +10,15 @@ import { UserContext, useUserContext } from "@/contexts/user-context";
 import { toastWarnNotify } from "@/helpers/Toastify";
 import { ISeferler, IValues } from "@/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export const Home = () => {
+  const router = useRouter()
+  const {currentUser} = useUserContext()
+  useEffect(() => {
+    currentUser.mail ? router.push("/home") : router.push("/login");
+  }, []);
+
   const date = new Date().toISOString().slice(0, 10);
   const initialState = {
     fromWhere: "",

@@ -4,12 +4,16 @@ import { INewUser } from "@/types";
 import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useUserContext,UserContext } from "@/contexts/user-context";
+
 
 export type ILoginFormProps = {
   setLogin: (value: boolean) => void;
 };
 
 export const LoginForm = (props: ILoginFormProps) => {
+  const {setCurrentUser,currentUser} = useUserContext()
+
   const router = useRouter();
   type IUser = {
     mail: string;
@@ -23,15 +27,16 @@ export const LoginForm = (props: ILoginFormProps) => {
     e.preventDefault();
     if (localStorage.getItem("users")) {
       allUsers = JSON.parse(localStorage.getItem("users") || "");
-      let currentUser: INewUser[] = allUsers.filter(
+      let currentUser2: INewUser[] = allUsers.filter(
         (item) => item.mail === user.mail
       );
-      console.log(currentUser,"annn");
-      if (currentUser.length == 1) {
+      console.log(currentUser2,"annn");
+      if (currentUser2.length == 1) {
         if (
-          currentUser[0].mail === user.mail &&
-          currentUser[0].password === user.password
+          currentUser2[0].mail === user.mail &&
+          currentUser2[0].password === user.password
         ) {
+          setCurrentUser({...user,gender:currentUser2[0].gender})
           toastSuccessNotify("Giriş başarılı! Ana sayfaya gidiliyor...");
           setTimeout(() => {
             router.push("/home");
