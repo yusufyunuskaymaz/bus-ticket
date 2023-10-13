@@ -31,7 +31,7 @@ export type ISeferler = {
     name: string;
     surname: string;
     mail: string;
-    gender: string;
+    gender: string | undefined;
     birthDate: string;
     password: string;
     password2: string;
@@ -40,7 +40,7 @@ export type ISeferler = {
   export type User = {
     mail: string;
     password: string;
-    gender: string;
+    gender: string | undefined;
     name?:string;
   };
 

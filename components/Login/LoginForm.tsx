@@ -73,14 +73,7 @@ export const LoginForm = (props: ILoginFormProps) => {
               >
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
+              
             </div>
             <div className="mt-2">
               <input
@@ -99,19 +92,19 @@ export const LoginForm = (props: ILoginFormProps) => {
 
           <div>
             <button type="submit" className="button w-full">
-              Login
+              Giriş Yap
             </button>
           </div>
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{" "}
+          Üye değil misin?{" "}
           <a
             href="#"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             onClick={() => setLogin(false)}
           >
-            Create Account!
+           Hemen hesap oluştur
           </a>
         </p>
       </div>

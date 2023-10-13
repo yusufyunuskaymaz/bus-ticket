@@ -1,33 +1,30 @@
-"use client"
+"use client";
 import { toastSuccessNotify } from "@/helpers/Toastify";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
-const Payment = (props:any) => {
+const Payment = (props: any) => {
   console.log(props);
-  const {searchParams} = props
+  const { searchParams } = props;
   console.log(searchParams);
- const router =  useRouter()
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e:any) => {
-    e.preventDefault()
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
 
-    setLoading(true)
+    setLoading(true);
 
     setTimeout(() => {
-      setLoading(false)
-      toastSuccessNotify("Başarılı")
+      setLoading(false);
+      toastSuccessNotify("Başarılı");
     }, 2000);
-    
   };
-  useEffect(() => {
-    
-  }, [loading])
-  
+  useEffect(() => {}, [loading]);
+
   return (
-    <form className="bg-gray-100" onSubmit={(e)=>handleSubmit(e)}>
+    <form className="bg-gray-100" onSubmit={(e) => handleSubmit(e)}>
       <div className=" flex pb-20">
         <div className="mx-auto bg-white p-10 rounded mt-10 ">
           <h1 className="text-3xl text-center">Ödeme Formu</h1>
@@ -73,35 +70,44 @@ const Payment = (props:any) => {
                 />
               </div>
             </div>
-              <div>
-                <p >Toplam Fiyat : <span className="font-bold text-gray-700">{searchParams.price} Tl</span> </p>
-              </div>
+            <div>
+              <p>
+                Toplam Fiyat :{" "}
+                <span className="font-bold text-gray-700">
+                  {searchParams.price} Tl
+                </span>{" "}
+              </p>
+            </div>
           </div>
-          <div className={`${loading  && "opacity-50" } `}>
-
-        
-          <button
-            className="button mt-5 bg-green-500 flex items-center gap-3 "
-            style={{ background: "#0ab285" }}
-            // onClick={() => handleSubmit()}
+          <div
+            className={`${
+              loading && "opacity-50"
+            } flex items-center justify-between mt-5`}
           >
-            <p>Güvenli Ödeme </p>
-            {loading && (
-              <div
-                className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-                role="status"
-              >
-                <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-                  Loading...
-                </span>
-              </div>
-            )}
-          </button>
+            <button
+              className="button bg-green-500 flex items-center gap-3 "
+              style={{ background: "#0ab285" }}
+              // onClick={() => handleSubmit()}
+            >
+              <p>Güvenli Ödeme </p>
+              {loading && (
+                <div
+                  className="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                  role="status"
+                >
+                  <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+                    Loading...
+                  </span>
+                </div>
+              )}
+            </button>
+
+            <button onClick={()=>router.push("/home")} className="button">Ana sayfaya dön</button>
           </div>
         </div>
-        <ToastContainer />  
+        <ToastContainer />
       </div>
-      </form>
+    </form>
   );
 };
 

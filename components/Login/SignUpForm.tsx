@@ -5,6 +5,7 @@ import { toastErrorNotify, toastSuccessNotify } from "@/helpers/Toastify";
 import { ToastContainer } from "react-toastify";
 import { INewUser } from "@/types";
 import { signUp } from "@/lib/signUp";
+import Select from "react-select";
 
 export const SignUpForm = (props: ILoginFormProps) => {
   const { setLogin } = props;
@@ -22,9 +23,16 @@ export const SignUpForm = (props: ILoginFormProps) => {
 
   const [newUser, setNewUser] = useState<INewUser>(user);
 
+  console.log(newUser,"aaa");
+
   const handleSubmit = (e:any)=>{
       signUp(e,newUser,allUsers,setLogin)
   }
+
+  const options = [
+    { value: "erkek", label: "Erkek" },
+    { value: "kadın", label: "Kadın" },
+  ];
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 pt-4 lg:px-8">
@@ -50,7 +58,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
                   name="name"
                   type="text"
                   autoComplete="name"
-                  placeholder="Name..."
+                  placeholder="İsim..."
                   required
                   className="input py-2"
                   onChange={(e) =>
@@ -72,7 +80,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
                   name="surname"
                   type="text"
                   autoComplete="surname"
-                  placeholder="Surname..."
+                  placeholder="Soyisim..."
                   required
                   className="input py-2"
                   onChange={(e) =>
@@ -113,7 +121,8 @@ export const SignUpForm = (props: ILoginFormProps) => {
                 Cinsiyet
               </label>
               <div className="mt-2">
-                <input
+                <Select placeholder="Cinsiyet" options={options} onChange={(val)=>setNewUser({ ...newUser, gender: val?.value })} />
+                {/* <input
                   id="gender"
                   name="gender"
                   type="text"
@@ -124,7 +133,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
                   onChange={(e) =>
                     setNewUser({ ...newUser, gender: e.target.value })
                   }
-                />
+                /> */}
               </div>
             </div>
             <div className="flex-1">
@@ -165,7 +174,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                placeholder="Password..."
+                placeholder="Şifre..."
                 required
                 minLength={6}
                 className="input py-2"
@@ -190,7 +199,7 @@ export const SignUpForm = (props: ILoginFormProps) => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                placeholder="Password..."
+                placeholder="Şifre..."
                 required
                 minLength={6}
                 className="input py-2"
@@ -206,19 +215,19 @@ export const SignUpForm = (props: ILoginFormProps) => {
               type="submit"
               className="button w-full"
             >
-              Sign Up
+              Kayıt Ol
             </button>
           </div>
         </form>
 
         <p className="mt-5 text-center text-sm text-gray-500">
-          Already Member?{" "}
+          Zaten üye misin ?{" "}
           <a
             href="#"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             onClick={() => setLogin(true)}
           >
-            Login!
+            Giriş Yap!
           </a>
         </p>
       </div>
