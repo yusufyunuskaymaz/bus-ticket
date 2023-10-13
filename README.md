@@ -55,19 +55,19 @@ Proje içinde aşağıdaki sayfalar bulunur:
 
 Proje içinde İstanbul ve Ankara'dan Bursa ve İzmir'e sefer verisi bulunur. Bu seferler statik bir dosyadan alınıp Next Router API ile kullanılır.
 Ankara-İzmir Seferler:
-1- 2023-10-13
+1- 2023-10-13 <br />
 2- 2023-10-14
 
-Ankara-Bursa Seferler:
-1- 2023-10-14
+Ankara-Bursa Seferler: <br />
+1- 2023-10-14 <br />
 2-2023-10-15
 
-İstanbul-İzmir Seferler:
-1- 2023-10-13
+İstanbul-İzmir Seferler: <br />
+1- 2023-10-13 <br />
 2- 2023-10-14
 
-İstanbul-Bursa Seferler:
-1- 2023-10-14
+İstanbul-Bursa Seferler: <br />
+1- 2023-10-14 <br />
 2- 2023-10-15
 
 ## Proje Dökümantasyonu
