@@ -17,7 +17,7 @@ Projenin yerel bir ortamda çalıştırılması için aşağıdaki adımları iz
 1. Proje deposunu bilgisayarınıza klonlayın.
 
 ```bash
-git clone https://github.com/kullanici/bus-ticket.git
+git clone https://github.com/yusufyunuskaymaz/bus-ticket.git
 ```
 2. Proje dizinine gidin.
 
