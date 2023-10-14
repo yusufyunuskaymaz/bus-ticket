@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className='p-5 text-center bg-gray-500 text-white'>Otobüs Biletini Güvenle Al!
     <br />
-    {currentUser.name} {currentUser.surname}
+    
     <ToastContainer />
 
     </div>

@@ -12,7 +12,7 @@ import { ISeferler, IValues } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getData, handleSubmit } from "@/lib/homePage";
-import { Navbar } from "@/components";
+import { Footer, Navbar } from "@/components";
 
 export const Home = () => {
   const router = useRouter();
@@ -45,12 +45,12 @@ export const Home = () => {
   console.log(currentUser,"ccc");
 
   return (
-    <>
+    <div className="flex flex-col">
       {lStorageUser.mail && <Navbar />}
       <div
         className={`${styles.hero} text-white font-bold text-3xl border-white`}
       >
-        <div className={`${styles.cardWrapper} p-3 `}>
+        <div className={`${styles.cardWrapper} p-3 mx-0 sm:mx-auto`}>
           <div className="pb-3">
             <h6 className="text-white text-2xl font-bold pb-3">
               Ucuz Otobüs Bileti Bulun
@@ -116,7 +116,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-[1100px] mx-auto">
+      <div className="max-w-[1100px] mx-auto w-full px-3 sm:px-0">
         <h3 className="font-bold text-3xl text-center mt-10 mb-10">
           Uygun Seferler
         </h3>
@@ -127,7 +127,7 @@ export const Home = () => {
                 key={index + 1}
                 href={{ pathname: "/home/sefer", query: { ...item } }}
               >
-                <div className="border flex-between p-1 sm:p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
+                <div className="border w-full flex-between p-1 sm:p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
                   <Image
                     width={100}
                     height={50}
@@ -163,7 +163,8 @@ export const Home = () => {
           })}
       </div>
       <div className="flex items-center justify-center w-full h-full"></div>
-    </>
+      <Footer />
+    </div>
   );
 };
 

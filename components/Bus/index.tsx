@@ -33,9 +33,9 @@ const Bus = (props: IBusProps) => {
   let gender = currentUser.gender
 
   return (
-    <div className="flex  ">
+    <div className="flex  flex-col sm:flex-row gap-10 sm:gap-0">
       <div
-        className="flex w-8/12 flex-col justify-between  max-w-[700px] h-[380px] mx-auto p-5 ps-20 rounded-l-3xl"
+        className="flex mx-5 sm:mx-auto w-[150%] sm:w-8/12 flex-col justify-between  sm:max-w-[700px] h-[380px]  p-5 sm:ps-20 rounded-l-3xl"
         style={{ backgroundColor: "#F3F6F9" }}
       >
         <div className="flex flex-wrap h-full flex-col-reverse gap-3 ">
@@ -115,7 +115,7 @@ const Bus = (props: IBusProps) => {
           })}
         </div>
       </div>
-      <div className="w-4/12 flex flex-col justify-between border-l-2 ms-10 ps-5">
+      <div className="w-full  sm:w-4/12 flex flex-col justify-between border-l-2 ms-10 ps-5">
         <div className="flex flex-col items-start">
           <h5>
             {customerSeats.length >= 1

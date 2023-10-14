@@ -1,7 +1,7 @@
 import { toastWarnNotify } from "@/helpers/Toastify";
 import { ISeatInfo } from "@/types";
 
-export const handleClick = (e: React.FormEvent<HTMLFormElement>, item: ISeatInfo,customerSeats:ISeatInfo[],setCustomerSeats:any,setSelectedSeat:any,seatInfo:ISeatInfo[])=>{
+export const handleClick = (e: any, item: ISeatInfo,customerSeats:ISeatInfo[],setCustomerSeats:any,setSelectedSeat:any,seatInfo:ISeatInfo[])=>{
         // If the user clicks on the seat of his choice delete it from customerSeats
         if (customerSeats.some((seat:any) => seat.id === item.id)) {
           const newC = customerSeats.filter((seat:any) => seat.id !== item.id);

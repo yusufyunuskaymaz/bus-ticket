@@ -48,8 +48,8 @@ const Payment = (props: any) => {
                 required
               />
             </div>
-            <div className="flex gap-3">
-              <div>
+            <div className="flex gap-3 flex-wrap sm:flex-nowrap">
+              <div className="w-full">
                 <label htmlFor="cardNumber">Son Kullanma Tarihi</label>
                 <input
                   maxLength={5}
@@ -59,7 +59,7 @@ const Payment = (props: any) => {
                   required
                 />
               </div>
-              <div>
+              <div className=" w-full">
                 <label htmlFor="cardNumber">CVC</label>
                 <input
                   type="tel"
@@ -82,10 +82,10 @@ const Payment = (props: any) => {
           <div
             className={`${
               loading && "opacity-50"
-            } flex items-center justify-between mt-5`}
+            } flex items-center justify-between mt-5 flex-wrap sm:flex-nowrap gap-3 sm:gap-5`}
           >
             <button
-              className="button bg-green-500 flex items-center gap-3 "
+              className="button bg-green-500 flex items-center gap-3 w-full "
               style={{ background: "#0ab285" }}
               // onClick={() => handleSubmit()}
             >
@@ -102,7 +102,13 @@ const Payment = (props: any) => {
               )}
             </button>
 
-            <button type="button" onClick={()=>router.push("/home")} className="button">Ana sayfaya dön</button>
+            <button
+              type="button"
+              onClick={() => router.push("/home")}
+              className="button w-full"
+            >
+              Ana sayfaya dön
+            </button>
           </div>
         </div>
         <ToastContainer />
