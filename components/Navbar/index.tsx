@@ -35,10 +35,7 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
   const router =useRouter()
   console.log(!!currentUser.mail,"mailll");
   console.log(pathName,"path");
-  if (!currentUser.mail || (pathName == "/login" || pathName == "/") ) {
-    // Kullanıcı giriş yapmamışsa Navbar'ı görüntüleme
-    return null
-  }
+
   
   const handleSubmit = ()=>{
     setCurrentUser({mail:"",password:"",gender:""})
@@ -67,7 +64,7 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
                 <div className="flex flex-shrink-0 items-center">
                   <Image
                     src={logo.src}
-                    className="h-8 w-auto cursor-pointer"
+                    className="hidden sm:block h-8 w-auto cursor-pointer"
                     alt="Your Company"
                     width={50}
                     height={50}
@@ -80,7 +77,7 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
                         key="main"
                         onClick={()=>router.push("/home")}
                         className={classNames(
-                         ' text-white p-2 rounded cursor-pointer'
+                         ' text-white sm:text-white p-2 rounded cursor-pointer'
                         )}
                         // aria-current={item.current ? 'page' : undefined}
                       >
@@ -89,8 +86,9 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
                   </div>
                 </div>
               </div>
-              <p className='text-white'>{currentUser.name?.toLocaleUpperCase()}</p>
+              <p className='text-white hidden sm:flex'>{currentUser.name?.toLocaleUpperCase()}</p>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
                 <button
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"

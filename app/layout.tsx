@@ -21,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <UserContextProvider>
-          <Navbar />
+          
           {children}
           <Footer />
         </UserContextProvider>

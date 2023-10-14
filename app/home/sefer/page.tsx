@@ -18,7 +18,7 @@ const Sefer = (props: ISeferProps) => {
   return (
     <div className="text-center mt-10 max-w-[1100px] mx-auto">
       <h2 className="text-3xl">Koltuk Seçimi</h2>
-      <div className="border flex-between p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
+      <div className="border flex-between px-0 sm:p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
         <Image width={100} height={50} alt="company-logo" src={searchParams.companyImage} />
         <div className="flex flex-col">
           <p className="font-normal text-xl">{searchParams.departureTime}</p>

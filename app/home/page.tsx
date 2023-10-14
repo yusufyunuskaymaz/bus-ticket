@@ -12,13 +12,14 @@ import { ISeferler, IValues } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getData, handleSubmit } from "@/lib/homePage";
+import { Navbar } from "@/components";
 
 export const Home = () => {
   const router = useRouter();
   const { currentUser } = useUserContext();
+ let lStorageUser = JSON.parse(localStorage.getItem("currentUser") || "");
 
   useEffect(() => {
-    const lStorageUser = JSON.parse(localStorage.getItem("currentUser") || "")
     lStorageUser?.mail ? router.push("/home") : router.push("/login");
   }, []);
 
@@ -33,25 +34,23 @@ export const Home = () => {
   const [seferler, setSeferler] = useState<ISeferler[]>([]);
   const [isDataFetched, setIsDataFetched] = useState(false);
 
-
-
   // starting fetch
 
   useEffect(() => {
     if (isDataFetched) {
-      getData(data,setSeferler);
+      getData(data, setSeferler);
       setIsDataFetched(false);
     }
   }, [isDataFetched]);
-
-
+  console.log(currentUser,"ccc");
 
   return (
     <>
+      {lStorageUser.mail && <Navbar />}
       <div
         className={`${styles.hero} text-white font-bold text-3xl border-white`}
       >
-        <div className={styles.cardWrapper}>
+        <div className={`${styles.cardWrapper} p-3 `}>
           <div className="pb-3">
             <h6 className="text-white text-2xl font-bold pb-3">
               Ucuz Otobüs Bileti Bulun
@@ -60,7 +59,7 @@ export const Home = () => {
               Fiyatları karşılaştırın ve online otobüs bileti rezervasyonu yapın
             </h6>
           </div>
-          <div className={styles.ticketCard}>
+          <div className={`${styles.ticketCard} w-full sm:w-1/2 p-5 sm:p-10`}>
             <p className="text-black text-xl pb-3">Otobüs Bileti</p>
             <div className="space-y-6">
               <div className="flex-center gap-3">
@@ -84,7 +83,7 @@ export const Home = () => {
                     {/* <input value="Ankara" className="p-2" type="date" id="date" /> */}
                     <DatePicker data={data} setData={setData} />
                   </div>
-                  <div className="flex-1 gap-3 flex items-end ">
+                  <div className="flex-1 gap-3 flex items-end flex-wrap">
                     <button
                       onClick={() => setData({ ...data, date: date })}
                       className="flex-1 bg-gray-600 px-0 text-white border button"
@@ -107,7 +106,10 @@ export const Home = () => {
                   </div>
                 </div>
               </div>
-              <button className="button w-full" onClick={() => handleSubmit(data,setIsDataFetched)}>
+              <button
+                className="button w-full"
+                onClick={() => handleSubmit(data, setIsDataFetched)}
+              >
                 Otobüs Bileti Bul
               </button>
             </div>
@@ -125,12 +127,13 @@ export const Home = () => {
                 key={index + 1}
                 href={{ pathname: "/home/sefer", query: { ...item } }}
               >
-                <div className="border flex-between p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
+                <div className="border flex-between p-1 sm:p-5 py-10 bg-white rounded-lg shadow my-10 hover:shadow-lg cursor-pointer transition-shadow">
                   <Image
                     width={100}
                     height={50}
                     src={item.companyImage}
                     alt="logo"
+                    className="w-[50px] sm:w-[100px]"
                   />
                   <div className="flex flex-col">
                     <p className="font-normal text-xl">{item.departureTime}</p>
@@ -139,7 +142,7 @@ export const Home = () => {
                     </p>
                   </div>
                   <div className="flex flex-col text-center">
-                    <div className="flex-center mb-3">
+                    <div className=" hidden sm:flex center mb-3">
                       <Image
                         src={seat.src}
                         width={25}
@@ -148,7 +151,7 @@ export const Home = () => {
                       />
                       <p className="ps-1">{item.emptySeats} boş koltuk</p>
                     </div>
-                    <p>
+                    <p className="hidden sm:flex">
                       {item.fromWhere} Otogarı {">"} {item.toWhere} Otogarı
                     </p>
                   </div>
