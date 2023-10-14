@@ -8,6 +8,7 @@ Bu proje, otobüs bilet satış uygulamasının temel özelliklerini içerir. Ku
 - Sefer verileri statik bir dosyadan alınır ve Next.js API Routes ile POST isteklerinde döndürülür.
 - State Management için Context API kullanılmıştır.
 - Kayıt yapan kullanıcı bilgileri localStorage da depolanır ve başka bir veritabanı kullanılmamıştır.
+- Mobil ekranlar için breakpoint 640px dir.
 
 
 ## Başlangıç

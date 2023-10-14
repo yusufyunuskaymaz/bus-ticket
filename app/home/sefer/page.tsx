@@ -49,7 +49,6 @@ const Sefer = (props: ISeferProps) => {
           </p>
         </div>
         <p className="text-xl font-bold">{searchParams.price} ₺</p>
-        <button className="button">Bileti Al {"->"}</button>
       </div>
       <Bus searchParams={searchParams} />
     </div>
