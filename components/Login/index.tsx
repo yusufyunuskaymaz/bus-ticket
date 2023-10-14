@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { LoginForm } from "./LoginForm";
 import { SignUpForm } from "./SignUpForm";
+import { ToastContainer } from "react-toastify";
 
  const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,6 +19,8 @@ import { SignUpForm } from "./SignUpForm";
         />
       </div>
       <div className="w-full sm:w-2/5 ">{isLogin ? <LoginForm setLogin={setIsLogin} /> : <SignUpForm setLogin={setIsLogin} />}</div>
+      <ToastContainer />
+
     </div>
   );
 };
