@@ -9,12 +9,12 @@ import { usePathname } from 'next/navigation'
 import logo from "@/assets/images/logoApp.svg"
 import { toastSuccessNotify } from '@/helpers/Toastify'
 
-const navigation = [
-  { name: 'Anasayfa', href: '/home', current: true },
-  { name: 'Hakkımızda', href: '#', current: false },
-  { name: 'Takvim', href: '#', current: false },
-  { name: 'İletişim', href: '#', current: false },
-]
+// const navigation = [
+//   { name: 'Anasayfa', href: '/home', current: true },
+//   { name: 'Hakkımızda', href: '#', current: false },
+//   { name: 'Takvim', href: '#', current: false },
+//   { name: 'İletişim', href: '#', current: false },
+// ]
 
 function classNames(...classes:any) {
   return classes.filter(Boolean).join(' ')
@@ -33,7 +33,9 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
 
   const {setCurrentUser} = useUserContext()
   const router =useRouter()
-  if (!currentUser.mail || pathName == "/login") {
+  console.log(!!currentUser.mail,"mailll");
+  console.log(pathName,"path");
+  if (!currentUser.mail || (pathName == "/login" || pathName == "/") ) {
     // Kullanıcı giriş yapmamışsa Navbar'ı görüntüleme
     return null
   }
@@ -74,19 +76,16 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
                       <a
-                        key={item.name}
-                        href={item.href}
+                        key="main"
+                        onClick={()=>router.push("/home")}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                         ' text-white p-2 rounded cursor-pointer'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        // aria-current={item.current ? 'page' : undefined}
                       >
-                        {item.name}
+                        Anasayfa
                       </a>
-                    ))}
                   </div>
                 </div>
               </div>
@@ -165,7 +164,7 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
+              {/* {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"
@@ -178,7 +177,7 @@ if(typeof localStorage !== 'undefined' && localStorage.getItem("currentUser")){
                 >
                   {item.name}
                 </Disclosure.Button>
-              ))}
+              ))} */}
             </div>
           </Disclosure.Panel>
         </>

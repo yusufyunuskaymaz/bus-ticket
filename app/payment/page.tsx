@@ -102,7 +102,7 @@ const Payment = (props: any) => {
               )}
             </button>
 
-            <button onClick={()=>router.push("/home")} className="button">Ana sayfaya dön</button>
+            <button type="button" onClick={()=>router.push("/home")} className="button">Ana sayfaya dön</button>
           </div>
         </div>
         <ToastContainer />
