@@ -1,5 +1,9 @@
 # Lojiper Web Uygulama
 
+## Gif:
+
+![](https://github.com/yusufyunuskaymaz/bus-ticket/blob/ui/bus.gif)
+
 Bu proje, otobüs bilet satış uygulamasının temel özelliklerini içerir. Kullanıcılar bu uygulama üzerinden bilet arayışlarını sorgulayabilir, bilet satın alabilir ve ödemelerini gerçekleştirebilirler.
 
 ## Proje Detayları
